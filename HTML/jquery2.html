@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery2</title>
+    <link rel = "stylesheet" type = "text/css" href = "../css/jquery2.css">
+</head>
+<body>
+    <h1>グラフアルゴリズム</h1>
+    <dl class="dropdown">
+        <div>
+            <dt>深さ優先探索</dt>
+            <dd>まず進めるだけ進んで行き止まりにたどり着いたら戻るように探索していく。<br>行きがけ順と帰りがけ順の両方で処理をかけるが多くの場合行きがけ順のみで事足りる。</dd>
+        </div>
+        <div>
+            <dt>幅優先探索</dt>
+            <dd>始点に近い場所から探索していくため, 重みなしグラフにおける迷路の最短経路長の探索などに用いられる。</dd>
+        </div>
+        <div>
+            <dt>ダイクストラ法</dt>
+            <dd>正の重みのみの重みありグラフにおいて, 回り道するとコストが増えることを利用して効率的に最短経路を求めることができる。</dd>
+        </div>
+    </dl>
+    <script src="../js/jquery/jquery-3.3.1.min.js"></script>
+    <script type = "text/javascript" src = "../js/appJquery2.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログイン</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 50px;
+    }
+    .login-box {
+      max-width: 300px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="text"], input[type="password"] {
+      width: calc(100% - 20px);
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    input[type="submit"] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>ログイン</h2>
+    <form id="loginForm" action="/login" method="post">
+      <input type="text" name="username" placeholder="ユーザー名" required><br>
+      <input type="password" name="password" placeholder="パスワード" required><br>
+      <input type="submit" value="ログイン">
+    </form>
+    <div class="forgot-password.html">
+      <a href="forgot-password.html">パスワードを忘れた場合</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // フォームのデフォルトの送信を防止
+
+      // ここでサーバーサイドのログイン処理を行う
+      // 例えば、fetch APIを使って非同期でサーバーにPOSTリクエストを送信するなど
+
+      // ログイン成功の場合、画面遷移を行う
+      window.location.href = "Sreach.html"; // ダッシュボードへのリダイレクト
+    });
+  </script>
+</body>
+</html>
