@@ -9,7 +9,7 @@ import * as $forgot_password from "./routes/forgot-password.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $search from "./routes/search.tsx";
 import * as $search2 from "./routes/search2.tsx";
-
+import * as $LoginForm from "./islands/LoginForm.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -22,7 +22,9 @@ const manifest = {
     "./routes/search.tsx": $search,
     "./routes/search2.tsx": $search2,
   },
-  islands: {},
+  islands: {
+    "./islands/LoginForm.tsx": $LoginForm,
+  },
   baseUrl: import.meta.url,
 } satisfies Manifest;
 
