@@ -5,10 +5,16 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
-import * as $forgot_password from "./routes/forgot-password.tsx";
+import * as $api_users_id_ from "./routes/api/users/[id].ts";
+import * as $api_users_index from "./routes/api/users/index.ts";
+import * as $client_create from "./routes/client-create.tsx";
+import * as $client_search from "./routes/client-search.tsx";
+import * as $contact_create from "./routes/contact-create.tsx";
+import * as $contact_search from "./routes/contact-search.tsx";
 import * as $index from "./routes/index.tsx";
-import * as $search from "./routes/search.tsx";
-import * as $search2 from "./routes/search2.tsx";
+import * as $old_forgot_password from "./routes/old/forgot-password.tsx";
+import * as $old_search from "./routes/old/search.tsx";
+import * as $portal from "./routes/portal.tsx";
 import * as $LoginForm from "./islands/LoginForm.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
@@ -17,10 +23,16 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/_layout.tsx": $_layout,
-    "./routes/forgot-password.tsx": $forgot_password,
+    "./routes/api/users/[id].ts": $api_users_id_,
+    "./routes/api/users/index.ts": $api_users_index,
+    "./routes/client-create.tsx": $client_create,
+    "./routes/client-search.tsx": $client_search,
+    "./routes/contact-create.tsx": $contact_create,
+    "./routes/contact-search.tsx": $contact_search,
     "./routes/index.tsx": $index,
-    "./routes/search.tsx": $search,
-    "./routes/search2.tsx": $search2,
+    "./routes/old/forgot-password.tsx": $old_forgot_password,
+    "./routes/old/search.tsx": $old_search,
+    "./routes/portal.tsx": $portal,
   },
   islands: {
     "./islands/LoginForm.tsx": $LoginForm,

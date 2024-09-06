@@ -8,6 +8,7 @@ export default function LoginForm() {
 
   function submitHandler(e: SubmitEvent) {
     e.preventDefault();
+    
     if (name.current === user.name && password.current === user.password) {
       console.log("success login!");
     }
