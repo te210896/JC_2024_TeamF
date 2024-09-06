@@ -1,17 +1,33 @@
 import { useRef } from "preact/hooks";
+import { useSignal } from "@preact/signals";
 
 export default function LoginForm() {
   // リレンダーする必要がないのでuseRef
-  const name = useRef<string>("");
+  const id = useRef<string>("");
   const password = useRef<string>("");
-  const user = { name: "test", password: "qwerty" };
+  const hasError = useSignal<boolean>(false);
 
-  function submitHandler(e: SubmitEvent) {
+  async function submitHandler(e: SubmitEvent) {
     e.preventDefault();
-    
-    if (name.current === user.name && password.current === user.password) {
-      console.log("success login!");
-    }
+    const response =
+      (await fetch(`http://15.168.7.69:8000/api/users/${id.current}`))
+        .json();
+    response.then((user) => {
+      if (password.current === user.password) {
+        console.log("login ok");
+        return new Response(null, {
+          status: 307,
+          statusText: "Temporary Redirect",
+          headers: { "Location": "/client-search" },
+        });
+      } else {
+        console.log("login ng");
+        hasError.value = true;
+      }
+    }).catch((_e) => {
+      console.log("user doesn't exists");
+      hasError.value = true;
+    });
   }
 
   return (
@@ -28,11 +44,14 @@ export default function LoginForm() {
           method="GET"
           onSubmit={submitHandler}
         >
+          {hasError.value && (
+            <p class="text-red-500">IDかパスワードが間違っています。</p>
+          )}
           <input
             type="text"
             name="name"
-            placeholder="ユーザー名"
-            onChange={(e) => name.current = e.currentTarget.value}
+            placeholder="ID"
+            onChange={(e) => id.current = e.currentTarget.value}
             required
           />
           <br />
