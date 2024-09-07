@@ -24,7 +24,10 @@ export const handler: Handlers = {
         // 307だとPOSTのまま飛ばすので302にしてGETに変換してリダイレクト。
         status: 302,
         statusText: "Temporary Redirect",
-        headers: { "Location": "/client-search" },
+        headers: {
+          "Location": "/login/client-search",
+          "Set-Cookie": `user=${id}`,
+        },
       });
     } else {
       return ctx.render({ id, password, hasError: true });

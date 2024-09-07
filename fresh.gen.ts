@@ -6,15 +6,16 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
 import * as $api_users_id_ from "./routes/api/users/[id].ts";
-import * as $api_users_index from "./routes/api/users/index.ts";
-import * as $client_create from "./routes/client-create.tsx";
-import * as $client_search from "./routes/client-search.tsx";
-import * as $contact_create from "./routes/contact-create.tsx";
-import * as $contact_search from "./routes/contact-search.tsx";
-import * as $forgot_password from "./routes/forgot-password.tsx";
 import * as $index from "./routes/index.tsx";
+import * as $login_middleware from "./routes/login/_middleware.ts";
+import * as $login_api_users_index from "./routes/login/api/users/index.ts";
+import * as $login_client_create from "./routes/login/client-create.tsx";
+import * as $login_client_search from "./routes/login/client-search.tsx";
+import * as $login_contact_create from "./routes/login/contact-create.tsx";
+import * as $login_contact_search from "./routes/login/contact-search.tsx";
+import * as $login_forgot_password from "./routes/login/forgot-password.tsx";
+import * as $login_portal from "./routes/login/portal.tsx";
 import * as $old_search from "./routes/old/search.tsx";
-import * as $portal from "./routes/portal.tsx";
 import * as $LoginForm from "./islands/LoginForm.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
@@ -24,15 +25,16 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/_layout.tsx": $_layout,
     "./routes/api/users/[id].ts": $api_users_id_,
-    "./routes/api/users/index.ts": $api_users_index,
-    "./routes/client-create.tsx": $client_create,
-    "./routes/client-search.tsx": $client_search,
-    "./routes/contact-create.tsx": $contact_create,
-    "./routes/contact-search.tsx": $contact_search,
-    "./routes/forgot-password.tsx": $forgot_password,
     "./routes/index.tsx": $index,
+    "./routes/login/_middleware.ts": $login_middleware,
+    "./routes/login/api/users/index.ts": $login_api_users_index,
+    "./routes/login/client-create.tsx": $login_client_create,
+    "./routes/login/client-search.tsx": $login_client_search,
+    "./routes/login/contact-create.tsx": $login_contact_create,
+    "./routes/login/contact-search.tsx": $login_contact_search,
+    "./routes/login/forgot-password.tsx": $login_forgot_password,
+    "./routes/login/portal.tsx": $login_portal,
     "./routes/old/search.tsx": $old_search,
-    "./routes/portal.tsx": $portal,
   },
   islands: {
     "./islands/LoginForm.tsx": $LoginForm,
