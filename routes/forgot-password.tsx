@@ -2,11 +2,11 @@ export default function ForgotPasswordPage() {
   return (
     <>
       <head>
-        <title>検索画面</title>
+        <title>パスワードリセット</title>
         <link
           rel="stylesheet"
           type="text/css"
-          href="/old/forgot-password.css"
+          href="/forgot-password.css"
         />
       </head>
       <div class="reset-box">

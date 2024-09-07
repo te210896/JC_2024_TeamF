@@ -1,35 +1,10 @@
-import { useRef } from "preact/hooks";
-import { useSignal } from "@preact/signals";
+interface LoginFormProps {
+  id: string;
+  password: string;
+  hasError: boolean;
+}
 
-export default function LoginForm() {
-  // リレンダーする必要がないのでuseRef
-  const id = useRef<string>("");
-  const password = useRef<string>("");
-  const hasError = useSignal<boolean>(false);
-
-  async function submitHandler(e: SubmitEvent) {
-    e.preventDefault();
-    const response =
-      (await fetch(`http://15.168.7.69:8000/api/users/${id.current}`))
-        .json();
-    response.then((user) => {
-      if (password.current === user.password) {
-        console.log("login ok");
-        return new Response(null, {
-          status: 307,
-          statusText: "Temporary Redirect",
-          headers: { "Location": "/client-search" },
-        });
-      } else {
-        console.log("login ng");
-        hasError.value = true;
-      }
-    }).catch((_e) => {
-      console.log("user doesn't exists");
-      hasError.value = true;
-    });
-  }
-
+export default function LoginForm({ id, password, hasError }: LoginFormProps) {
   return (
     <>
       <head>
@@ -41,32 +16,31 @@ export default function LoginForm() {
         <form
           id="loginForm"
           action="/"
-          method="GET"
-          onSubmit={submitHandler}
+          method="POST"
         >
-          {hasError.value && (
+          {hasError && (
             <p class="text-red-500">IDかパスワードが間違っています。</p>
           )}
           <input
             type="text"
-            name="name"
-            placeholder="ID"
-            onChange={(e) => id.current = e.currentTarget.value}
+            name="id"
+            value={id}
+            placeholder="ユーザーID"
             required
           />
           <br />
           <input
             type="password"
             name="password"
+            value={password}
             placeholder="パスワード"
-            onChange={(e) => password.current = e.currentTarget.value}
             required
           />
           <br />
-          <input type="submit" value="ログイン" />
+          <input type="submit" placeholder="ログイン" />
         </form>
         <div class="forgot-password.html">
-          <a href="forgot-password.html">パスワードを忘れた場合</a>
+          <a href="/forgot-password">パスワードを忘れた場合</a>
         </div>
       </div>
     </>

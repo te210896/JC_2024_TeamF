@@ -4,7 +4,7 @@ export default function ClientCreatePage() {
             <head>
                 <title>顧客情報 登録</title>
                 <link
-                    rel="clie"
+                    rel="stylesheet"
                     type="text/css"
                     href="/client-create.css"
                 />

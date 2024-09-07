@@ -7,7 +7,7 @@ export default function ClientSearchPage() {
             <head>
                 <title>顧客情報 検索・</title>
                 <link
-                    rel="client-search"
+                    rel="stylesheet"
                     type="text/css"
                     href="/client-search.css"
                 />

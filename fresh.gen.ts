@@ -11,8 +11,8 @@ import * as $client_create from "./routes/client-create.tsx";
 import * as $client_search from "./routes/client-search.tsx";
 import * as $contact_create from "./routes/contact-create.tsx";
 import * as $contact_search from "./routes/contact-search.tsx";
+import * as $forgot_password from "./routes/forgot-password.tsx";
 import * as $index from "./routes/index.tsx";
-import * as $old_forgot_password from "./routes/old/forgot-password.tsx";
 import * as $old_search from "./routes/old/search.tsx";
 import * as $portal from "./routes/portal.tsx";
 import * as $LoginForm from "./islands/LoginForm.tsx";
@@ -29,8 +29,8 @@ const manifest = {
     "./routes/client-search.tsx": $client_search,
     "./routes/contact-create.tsx": $contact_create,
     "./routes/contact-search.tsx": $contact_search,
+    "./routes/forgot-password.tsx": $forgot_password,
     "./routes/index.tsx": $index,
-    "./routes/old/forgot-password.tsx": $old_forgot_password,
     "./routes/old/search.tsx": $old_search,
     "./routes/portal.tsx": $portal,
   },
