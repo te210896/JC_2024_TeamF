@@ -1,11 +1,16 @@
 import { FreshContext } from "$fresh/server.ts";
 
-export function handler(
+export async function handler(
     req: Request,
     ctx: FreshContext,
 ) {
-    const cookie = req.headers.get("Cookie")?.split("=");
-    if (cookie) {
+    const id = req.headers.get("Cookie")?.split("=")[1];
+    const response = (await fetch(`${new URL(req.url).origin}/api/users/${id}`))
+        .json();
+    const isAdmin = await response.then((user) => user.isAdmin).catch(
+        (_e) => false,
+    );
+    if (isAdmin) {
         return ctx.next();
     } else {
         return new Response(null, {

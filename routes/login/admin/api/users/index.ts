@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { User } from "../.././../../utils/User.ts";
+import { User } from "../../../../../utils/User.ts";
 
 export const handler: Handlers<User | null> = {
     async POST(req, _ctx) {

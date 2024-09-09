@@ -37,7 +37,7 @@ export default function LoginForm({ id, password, hasError }: LoginFormProps) {
             required
           />
           <br />
-          <input type="submit" placeholder="ログイン" />
+          <input type="submit" value="ログイン" />
         </form>
         <div class="forgot-password.html">
           <a href="/forgot-password">パスワードを忘れた場合</a>

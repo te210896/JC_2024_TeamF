@@ -2,8 +2,22 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import LoginForm from "../islands/LoginForm.tsx";
 
 export const handler: Handlers = {
-  GET(_req, ctx) {
-    return ctx.render({ id: "", password: "", hasError: false });
+  GET(req, ctx) {
+    if (req.headers.get("Cookie")) {
+      return new Response(null, {
+        // <リダイレクト動作確認結果>
+        // 307 Temporary Redirect: 飛び先毎回変化(再計算)
+        // 308 Permanent Redirect: 飛び先固定化(キャッシュ)
+        // 307だとPOSTのまま飛ばすので302にしてGETに変換してリダイレクト。
+        status: 302,
+        statusText: "Temporary Redirect",
+        headers: {
+          "Location": "/login/portal",
+        },
+      });
+    } else {
+      return ctx.render({ id: "", password: "", hasError: false });
+    }
   },
   async POST(req, ctx) {
     // サーバーサイドの検証ではCookieとRedirect
@@ -25,8 +39,8 @@ export const handler: Handlers = {
         status: 302,
         statusText: "Temporary Redirect",
         headers: {
-          "Location": "/login/client-search",
-          "Set-Cookie": `user=${id}`,
+          "Location": "/login/portal",
+          "Set-Cookie": `user=${id}; Path=/;`,
         },
       });
     } else {
