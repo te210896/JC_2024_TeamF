@@ -54,11 +54,6 @@ body {
     height: 100px;
 }
 
-.form-group input[type="radio"] {
-    width: auto;
-    margin-right: 10px;
-}
-
 .form-group button {
     width: 100%;
     padding: 10px;

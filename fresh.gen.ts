@@ -5,15 +5,17 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
+import * as $api_clients_id_ from "./routes/api/clients/[id].ts";
+import * as $api_clients_index from "./routes/api/clients/index.ts";
+import * as $api_clients_list from "./routes/api/clients/list.ts";
+import * as $api_contacts_id_ from "./routes/api/contacts/[id].ts";
+import * as $api_contacts_index from "./routes/api/contacts/index.ts";
+import * as $api_contacts_list from "./routes/api/contacts/list.ts";
 import * as $api_users_id_ from "./routes/api/users/[id].ts";
+import * as $api_users_index from "./routes/api/users/index.ts";
 import * as $index from "./routes/index.tsx";
 import * as $login_middleware from "./routes/login/_middleware.ts";
 import * as $login_admin_middleware from "./routes/login/admin/_middleware.ts";
-import * as $login_admin_api_clients_id_ from "./routes/login/admin/api/clients/[id].ts";
-import * as $login_admin_api_clients_index from "./routes/login/admin/api/clients/index.ts";
-import * as $login_admin_api_contacts_id_ from "./routes/login/admin/api/contacts/[id].ts";
-import * as $login_admin_api_contacts_index from "./routes/login/admin/api/contacts/index.ts";
-import * as $login_admin_api_users_index from "./routes/login/admin/api/users/index.ts";
 import * as $login_admin_client_create from "./routes/login/admin/client-create.tsx";
 import * as $login_admin_contact_create from "./routes/login/admin/contact-create.tsx";
 import * as $login_client_search from "./routes/login/client-search.tsx";
@@ -29,16 +31,17 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/_layout.tsx": $_layout,
+    "./routes/api/clients/[id].ts": $api_clients_id_,
+    "./routes/api/clients/index.ts": $api_clients_index,
+    "./routes/api/clients/list.ts": $api_clients_list,
+    "./routes/api/contacts/[id].ts": $api_contacts_id_,
+    "./routes/api/contacts/index.ts": $api_contacts_index,
+    "./routes/api/contacts/list.ts": $api_contacts_list,
     "./routes/api/users/[id].ts": $api_users_id_,
+    "./routes/api/users/index.ts": $api_users_index,
     "./routes/index.tsx": $index,
     "./routes/login/_middleware.ts": $login_middleware,
     "./routes/login/admin/_middleware.ts": $login_admin_middleware,
-    "./routes/login/admin/api/clients/[id].ts": $login_admin_api_clients_id_,
-    "./routes/login/admin/api/clients/index.ts": $login_admin_api_clients_index,
-    "./routes/login/admin/api/contacts/[id].ts": $login_admin_api_contacts_id_,
-    "./routes/login/admin/api/contacts/index.ts":
-      $login_admin_api_contacts_index,
-    "./routes/login/admin/api/users/index.ts": $login_admin_api_users_index,
     "./routes/login/admin/client-create.tsx": $login_admin_client_create,
     "./routes/login/admin/contact-create.tsx": $login_admin_contact_create,
     "./routes/login/client-search.tsx": $login_client_search,

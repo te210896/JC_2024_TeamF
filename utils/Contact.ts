@@ -2,12 +2,8 @@
 
 export interface Contact {
     id: string; // UUID
-    isRequest: boolean;
-    isContact: boolean;
-    isSupport: boolean;
-    isClaim: boolean;
-    isEtc: boolean;
-    contactDate: Date;
+    inquiryType: string;
+    contactDate: string;
     contactDetails: string;
     constructionNumber: number;
     department: string;

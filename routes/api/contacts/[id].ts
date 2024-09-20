@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { Contact } from "../../../../../utils/Contact.ts";
+import { Contact } from "../../../utils/Contact.ts";
 
 export const handler: Handlers<Contact | null> = {
     async GET(_req, ctx) {
