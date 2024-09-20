@@ -1,93 +1,76 @@
-export default function ClientCreatePage() {
+import { Handlers, PageProps } from "$fresh/server.ts";
+import ClientCreateForm from "../../../components/ClientCreateForm.tsx";
+
+export const handler: Handlers = {
+    GET(_req, ctx) {
+        return ctx.render({
+            lastNameHiragana: "",
+            firstNameHiragana: "",
+            lastName: "",
+            firstName: "",
+            tel: "",
+            birthday: "",
+            address: "",
+            hasError: false,
+        });
+    },
+    async POST(req, ctx) {
+        // サーバーサイドの検証ではCookieとRedirect
+        const formData = await req.formData();
+        const id = crypto.randomUUID();
+        const lastNameHiragana = formData.get("lastNameHiragana");
+        const firstNameHiragana = formData.get("firstNameHiragana");
+        const lastName = formData.get("lastName");
+        const firstName = formData.get("firstName");
+        const tel = formData.get("tel");
+        const birthday = formData.get("birthday");
+        const address = formData.get("address");
+
+        // 接続自体に失敗したらcatch, ユーザーなしはthen
+        const response = (await fetch(
+            `${new URL(req.url).origin}/login/admin/api/clients/`,
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    id: id,
+                    lastNameHiragana: lastNameHiragana,
+                    firstNameHiragana: firstNameHiragana,
+                    lastName: lastName,
+                    firstName: firstName,
+                    tel: tel,
+                    birthday: birthday,
+                    address: address,
+                }),
+            },
+        )).json();
+        const hasError = await response.then((_client) => true)
+            .catch((_e) => false);
+        return ctx.render({
+            lastNameHiragana,
+            firstNameHiragana,
+            lastName,
+            firstName,
+            tel,
+            birthday,
+            address,
+            hasError,
+        });
+    },
+};
+
+export default function ClientCreatePage({ data }: PageProps) {
     return (
         <>
-            <head>
-                <title>顧客情報 登録</title>
-                <link
-                    rel="stylesheet"
-                    type="text/css"
-                    href="/client-create.css"
-                />
-            </head>
-
-            <div className="contact-form-container">
-                <h2>情報登録</h2>
-                <form action="/submit_inquiry" method="POST"></form>
-                    <div className="section">
-                        <h3>顧客情報</h3>
-
-                        <div className="form-group">
-                            <label htmlFor="customer-id">顧客ID:</label>
-                            <input
-                                type="text"
-                                id="customer-id"
-                                name="customer_id"
-                                required
-                                placeholder="顧客IDを入力"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="name">苗字(かな):</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                required
-                                placeholder="苗字(かな)を入力"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="name">名前(かな):</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                required
-                                placeholder="名前(かなを入力)"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="name">氏名:</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                required
-                                placeholder="氏名を入力"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="phone">電話番号:</label>
-                            <input
-                                type="tel"
-                                id="phone"
-                                name="phone"
-                                required
-                                placeholder="電話番号を入力"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="address">住所:</label>
-                            <input
-                                type="text"
-                                id="address"
-                                name="address"
-                                required
-                                placeholder="住所を入力"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="form-group">
-                        <button type="submit">送信</button>
-                    </div>
-                
-            </div>  
+            <ClientCreateForm
+                lastNameHiragana={data.lastNameHiragana}
+                firstNameHiragana={data.firstNameHiragana}
+                lastName={data.lastName}
+                firstName={data.firstName}
+                tel={data.tel}
+                birthday={data.birthday}
+                address={data.address}
+                hasError={data.hasError}
+            />
         </>
     );
 }

@@ -1,5 +1,5 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import LoginForm from "../islands/LoginForm.tsx";
+import LoginForm from "../components/LoginForm.tsx";
 
 export const handler: Handlers = {
   GET(req, ctx) {

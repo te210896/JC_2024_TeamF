@@ -9,6 +9,10 @@ import * as $api_users_id_ from "./routes/api/users/[id].ts";
 import * as $index from "./routes/index.tsx";
 import * as $login_middleware from "./routes/login/_middleware.ts";
 import * as $login_admin_middleware from "./routes/login/admin/_middleware.ts";
+import * as $login_admin_api_clients_id_ from "./routes/login/admin/api/clients/[id].ts";
+import * as $login_admin_api_clients_index from "./routes/login/admin/api/clients/index.ts";
+import * as $login_admin_api_contacts_id_ from "./routes/login/admin/api/contacts/[id].ts";
+import * as $login_admin_api_contacts_index from "./routes/login/admin/api/contacts/index.ts";
 import * as $login_admin_api_users_index from "./routes/login/admin/api/users/index.ts";
 import * as $login_admin_client_create from "./routes/login/admin/client-create.tsx";
 import * as $login_admin_contact_create from "./routes/login/admin/contact-create.tsx";
@@ -17,7 +21,7 @@ import * as $login_contact_search from "./routes/login/contact-search.tsx";
 import * as $login_forgot_password from "./routes/login/forgot-password.tsx";
 import * as $login_portal from "./routes/login/portal.tsx";
 import * as $old_search from "./routes/old/search.tsx";
-import * as $LoginForm from "./islands/LoginForm.tsx";
+
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -29,6 +33,11 @@ const manifest = {
     "./routes/index.tsx": $index,
     "./routes/login/_middleware.ts": $login_middleware,
     "./routes/login/admin/_middleware.ts": $login_admin_middleware,
+    "./routes/login/admin/api/clients/[id].ts": $login_admin_api_clients_id_,
+    "./routes/login/admin/api/clients/index.ts": $login_admin_api_clients_index,
+    "./routes/login/admin/api/contacts/[id].ts": $login_admin_api_contacts_id_,
+    "./routes/login/admin/api/contacts/index.ts":
+      $login_admin_api_contacts_index,
     "./routes/login/admin/api/users/index.ts": $login_admin_api_users_index,
     "./routes/login/admin/client-create.tsx": $login_admin_client_create,
     "./routes/login/admin/contact-create.tsx": $login_admin_contact_create,
@@ -38,9 +47,7 @@ const manifest = {
     "./routes/login/portal.tsx": $login_portal,
     "./routes/old/search.tsx": $old_search,
   },
-  islands: {
-    "./islands/LoginForm.tsx": $LoginForm,
-  },
+  islands: {},
   baseUrl: import.meta.url,
 } satisfies Manifest;
 
