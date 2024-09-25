@@ -9,4 +9,5 @@ export interface Contact {
     department: string;
     responsiblePerson: string;
     constructionDetails: string;
+    clientId: string; // FK, UUID
 }

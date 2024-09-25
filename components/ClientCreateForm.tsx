@@ -6,6 +6,7 @@ interface ClientCreateFormProps {
     tel: string;
     birthday: Date;
     address: string;
+    clientId: string;
     hasError: boolean;
     isPost: boolean;
 }
@@ -19,6 +20,7 @@ export default function ClientCreateForm(
         tel,
         birthday,
         address,
+        clientId,
         hasError,
         isPost,
     }: ClientCreateFormProps,
@@ -136,6 +138,18 @@ export default function ClientCreateForm(
                                 name="address"
                                 value={address}
                                 placeholder="住所"
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="clientId">顧客ID:</label>
+                            <input
+                                id="clientId"
+                                type="text"
+                                name="clientId"
+                                value={clientId}
+                                placeholder="顧客ID"
                                 required
                             />
                         </div>

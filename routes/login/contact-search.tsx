@@ -1,58 +1,45 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { Contact } from "../../utils/Contact.ts";
 
 export const handler: Handlers = {
     GET(_req, ctx) {
         return ctx.render({
-            id: 0,
+            clientId: "",
             inquiryType: "",
+            contacts: [],
+            hasError: false,
+            isPost: false,
         });
     },
     async POST(req, ctx) {
         // サーバーサイドの検証ではCookieとRedirect
         const formData = await req.formData();
-        const id = formData.get("id");
+        const clientId = formData.get("clientId");
         const inquiryType = formData.get("inquiryType");
+        let contacts: Contact[] = [];
 
         // 接続自体に失敗したらcatch, 顧客情報なしはthen
         const response = (await fetch(
-            `${new URL(req.url).origin}/api/clients`,
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    id,
-                    lastNameHiragana,
-                    firstNameHiragana,
-                    lastName,
-                    firstName,
-                    tel,
-                    birthday,
-                    address,
-                }),
-            },
+            `${new URL(req.url).origin}/api/contacts/list`,
         )).json();
-        const hasError = await (response.then((_client) => false)
-            .catch((_e) => true));
+        const hasError = await (response.then((newContacts) => {
+            contacts = newContacts;
+            console.log(contacts);
+            return false;
+        }).catch((_e) => true));
         console.log(hasError);
         return hasError
             ? ctx.render({
-                lastNameHiragana,
-                firstNameHiragana,
-                lastName,
-                firstName,
-                tel,
-                birthday,
-                address,
+                clientId,
+                inquiryType,
+                contacts,
                 hasError,
                 isPost: true,
             })
             : ctx.render({
-                lastNameHiragana: "",
-                firstNameHiragana: "",
-                lastName: "",
-                firstName: "",
-                tel: "",
-                birthday: "",
-                address: "",
+                clientId: "",
+                inquiryType: "",
+                contacts,
                 hasError,
                 isPost: true,
             });
@@ -74,85 +61,115 @@ export default function ContactSearchPage({ data }: PageProps) {
                 />
             </head>
 
-            <div className="contact-form-container">
-                <h2>問い合わせ情報検索</h2>
-                <form action="/login/contact-search" method="POST">
-                    <div className="section">
-                        <h3>問い合わせ情報</h3>
-                        <div className="form-group">
-                            <label htmlFor="customer-id">顧客ID:</label>
-                            <input
-                                id="name"
-                                type="text"
-                                name="id"
-                                value={data.id}
-                                placeholder="顧客ID"
-                                required
-                            />
+            <div class="flex flex-col">
+                <div className="contact-form-container">
+                    <h2>問い合わせ情報 検索</h2>
+                    <form action="/login/contact-search" method="POST">
+                        <div className="section">
+                            <h3>問い合わせ情報 検索</h3>
+                            {data.isPost && (
+                                <p
+                                    class={data.hasError
+                                        ? "text-red-500"
+                                        : "text-green-500"}
+                                >
+                                    {data.hasError
+                                        ? "使用できない文字が含まれています。"
+                                        : "正常に検索できました。"}
+                                </p>
+                            )}
+                            <div className="form-group">
+                                <label htmlFor="customer-id">顧客ID:</label>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    name="clientId"
+                                    value={data.clientId}
+                                    placeholder="顧客ID"
+                                    required
+                                />
+                            </div>
                         </div>
-                    </div>
-                    {/* 問い合わせタイプ */}
-                    <div className="section">
-                        <h3>問い合わせタイプ</h3>
-                        <div className="form-group">
-                            <fieldset>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="inquiryType"
-                                        value="isRequest"
-                                        checked={data.inquiryType ===
-                                            "isRequest"}
-                                    />{" "}
-                                    依頼
-                                </label>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="inquiryType"
-                                        value="isContact"
-                                        checked={data.inquiryType ===
-                                            "isContact"}
-                                    />{" "}
-                                    問い合わせ
-                                </label>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="inquiryType"
-                                        value="isSupport"
-                                        checked={data.inquiryType ===
-                                            "isSupport"}
-                                    />{" "}
-                                    サポート
-                                </label>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="inquiryType"
-                                        value="isClaim"
-                                        checked={data.inquiryType === "isClaim"}
-                                    />{" "}
-                                    クレーム
-                                </label>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="inquiryType"
-                                        value="isEtc"
-                                        checked={data.inquiryType === "isEtc"}
-                                    />{" "}
-                                    その他
-                                </label>
-                            </fieldset>
+                        {/* 問い合わせタイプ */}
+                        <div className="section">
+                            <h3>問い合わせタイプ</h3>
+                            <div className="form-group">
+                                <fieldset>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="inquiryType"
+                                            value="isRequest"
+                                            checked={data.inquiryType ===
+                                                "isRequest"}
+                                        />{" "}
+                                        依頼
+                                    </label>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="inquiryType"
+                                            value="isContact"
+                                            checked={data.inquiryType ===
+                                                "isContact"}
+                                        />{" "}
+                                        問い合わせ
+                                    </label>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="inquiryType"
+                                            value="isSupport"
+                                            checked={data.inquiryType ===
+                                                "isSupport"}
+                                        />{" "}
+                                        サポート
+                                    </label>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="inquiryType"
+                                            value="isClaim"
+                                            checked={data.inquiryType ===
+                                                "isClaim"}
+                                        />{" "}
+                                        クレーム
+                                    </label>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="inquiryType"
+                                            value="isEtc"
+                                            checked={data.inquiryType ===
+                                                "isEtc"}
+                                        />{" "}
+                                        その他
+                                    </label>
+                                </fieldset>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* 送信ボタン */}
-                    <div className="form-group">
-                        <button type="submit">送信</button>
-                    </div>
-                </form>
+                        {/* 送信ボタン */}
+                        <div className="form-group">
+                            <button type="submit">送信</button>
+                        </div>
+                    </form>
+                </div>
+                <ul>
+                    {data.contacts.map((contact: Contact) => (
+                        <li>
+                            <p>{contact.id}</p>
+                            <p>{contact.inquiryType}</p>
+                            <p>{contact.contactDate}</p>
+                            <p>{contact.contactDetails}</p>
+                            <p>{contact.constructionNumber}</p>
+                            <p>{contact.department}</p>
+                            <p>{contact.responsiblePerson}</p>
+                            <p>{contact.constructionDetails}</p>
+                            <p>{contact.clientId}</p>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </>
     );
