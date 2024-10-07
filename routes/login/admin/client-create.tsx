@@ -13,7 +13,6 @@ export const handler: Handlers = {
             address: "",
             hasError: false,
             isPost: false,
-            clientId: "",
         });
     },
     async POST(req, ctx) {
@@ -29,7 +28,6 @@ export const handler: Handlers = {
         const tel = formData.get("tel");
         const birthday = formData.get("birthday");
         const address = formData.get("address");
-        const clientId = formData.get("clientId");
 
         // 接続自体に失敗したらcatch, 顧客情報なしはthen
         const response = (await fetch(
@@ -45,7 +43,6 @@ export const handler: Handlers = {
                     tel,
                     birthday,
                     address,
-                    clientId,
                 }),
             },
         )).json();
@@ -60,7 +57,6 @@ export const handler: Handlers = {
                 firstName,
                 tel,
                 birthday,
-                clientId,
                 address,
                 hasError,
                 isPost: true,
@@ -91,7 +87,6 @@ export default function ClientCreatePage({ data }: PageProps) {
                 tel={data.tel}
                 birthday={data.birthday}
                 address={data.address}
-                clientId={data.clientId}
                 hasError={data.hasError}
                 isPost={data.isPost}
             />

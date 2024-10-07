@@ -11,16 +11,17 @@ export const handler: Handlers = {
             department: "",
             responsiblePerson: "",
             constructionDetails: "",
+            clientId: "",
             hasError: false,
             isPost: false,
         });
     },
     async POST(req, ctx) {
         // サーバーサイドの検証ではCookieとRedirect
-        console.log("route post");
+        // console.log("route post");
         const formData = await req.formData();
         const id = crypto.randomUUID();
-        console.log(id);
+        // console.log(id);
         const inquiryType = formData.get("inquiryType");
         const contactDate = formData.get("contactDate");
         const contactDetails = formData.get("contactDetails");
@@ -28,6 +29,7 @@ export const handler: Handlers = {
         const department = formData.get("department");
         const responsiblePerson = formData.get("responsiblePerson");
         const constructionDetails = formData.get("constructionDetails");
+        const clientId = formData.get("clientId");
 
         // 接続自体に失敗したらcatch, 問い合わせ情報なしはthen
         const response = (await fetch(
@@ -43,6 +45,7 @@ export const handler: Handlers = {
                     department,
                     responsiblePerson,
                     constructionDetails,
+                    clientId,
                 }),
             },
         )).json();
@@ -59,6 +62,7 @@ export const handler: Handlers = {
                 department,
                 responsiblePerson,
                 constructionDetails,
+                clientId,
                 hasError,
                 isPost: true,
             })
@@ -70,6 +74,7 @@ export const handler: Handlers = {
                 department: "",
                 responsiblePerson: "",
                 constructionDetails: "",
+                clientId: "",
                 hasError,
                 isPost: true,
             });
@@ -87,6 +92,7 @@ export default function ContactCreatePage({ data }: PageProps) {
                 department={data.department}
                 responsiblePerson={data.responsiblePerson}
                 constructionDetails={data.constructionDetails}
+                clientId={data.clientId}
                 hasError={data.hasError}
                 isPost={data.isPost}
             />

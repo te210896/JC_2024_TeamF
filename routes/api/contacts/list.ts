@@ -9,7 +9,7 @@ export const handler: Handlers<Contact | null> = {
         for await (const entry of entries) {
             contacts.push(entry.value);
         }
-        console.log("contacts-list", contacts);
+        // console.log("contacts-list", contacts);
         return new Response(JSON.stringify(contacts));
     },
 };

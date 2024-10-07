@@ -6,6 +6,7 @@ interface ContactCreateFormProps {
     department: string;
     responsiblePerson: string;
     constructionDetails: string;
+    clientId: string;
     hasError: boolean;
     isPost: boolean;
 }
@@ -19,6 +20,7 @@ export default function ContactCreateForm(
         department,
         responsiblePerson,
         constructionDetails,
+        clientId,
         hasError,
         isPost,
     }: ContactCreateFormProps,
@@ -174,6 +176,18 @@ export default function ContactCreateForm(
                                 name="constructionDetails"
                                 value={constructionDetails}
                                 placeholder="施工内容"
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="name">顧客ID:</label>
+                            <input
+                                id="name"
+                                type="text"
+                                name="clientId"
+                                value={clientId}
+                                placeholder="顧客ID"
                                 required
                             />
                         </div>

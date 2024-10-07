@@ -4,8 +4,8 @@ import { Client } from "./../../utils/Client.ts";
 export const handler: Handlers = {
     GET(_req, ctx) {
         return ctx.render({
-            lastName: "",
-            firstName: "",
+            lastNameHiragana: "",
+            firstNameHiragana: "",
             tel: "",
             birthday: "",
             clients: [],
@@ -16,10 +16,10 @@ export const handler: Handlers = {
     async POST(req, ctx) {
         // サーバーサイドの検証ではCookieとRedirect
         const formData = await req.formData();
-        const lastName = formData.get("lastNameHiragana");
-        const firstName = formData.get("firstNameHiragana");
-        const tel = formData.get("tel");
-        const birthday = formData.get("birthday");
+        const lastNameHiragana = String(formData.get("lastNameHiragana"));
+        const firstNameHiragana = String(formData.get("firstNameHiragana"));
+        const tel = String(formData.get("tel"));
+        const birthday = String(formData.get("birthday"));
         let clients: Client[] = [];
 
         // 接続自体に失敗したらcatch, 顧客情報なしはthen
@@ -28,14 +28,38 @@ export const handler: Handlers = {
         )).json();
         const hasError = await (response.then((newClients) => {
             clients = newClients;
-            console.log(clients);
+            clients = clients.filter((client) =>
+                new RegExp(lastNameHiragana === "" ? ".*" : lastNameHiragana)
+                    .test(
+                        client.lastNameHiragana,
+                    )
+            );
+            clients = clients.filter((client) =>
+                new RegExp(firstNameHiragana === "" ? ".*" : firstNameHiragana)
+                    .test(
+                        client.firstNameHiragana,
+                    )
+            );
+            clients = clients.filter((client) =>
+                new RegExp(tel === "" ? ".*" : tel)
+                    .test(
+                        client.tel,
+                    )
+            );
+            clients = clients.filter((client) =>
+                new RegExp(birthday === "" ? ".*" : birthday)
+                    .test(
+                        String(client.birthday),
+                    )
+            );
+            // console.log(clients);
             return false;
         }).catch((_e) => true));
-        console.log(hasError);
+        // console.log(hasError);
         return hasError
             ? ctx.render({
-                lastName,
-                firstName,
+                lastNameHiragana,
+                firstNameHiragana,
                 tel,
                 birthday,
                 clients,
@@ -87,7 +111,6 @@ export default function ClientSearchPage({ data }: PageProps) {
                                     type="text"
                                     id="name"
                                     name="lastNameHiragana"
-                                    required
                                     placeholder="苗字(かな)を入力"
                                 />
                             </div>
@@ -97,7 +120,6 @@ export default function ClientSearchPage({ data }: PageProps) {
                                     type="text"
                                     id="name"
                                     name="firstNameHiragana"
-                                    required
                                     placeholder="名前(かな)を入力"
                                 />
                             </div>
@@ -107,7 +129,6 @@ export default function ClientSearchPage({ data }: PageProps) {
                                     type="tel"
                                     id="phone"
                                     name="tel"
-                                    required
                                     placeholder="電話番号を入力"
                                 />
                             </div>
@@ -117,7 +138,6 @@ export default function ClientSearchPage({ data }: PageProps) {
                                     type="date"
                                     id="birthday"
                                     name="birthday"
-                                    required
                                 />
                             </div>
                         </div>
@@ -129,8 +149,19 @@ export default function ClientSearchPage({ data }: PageProps) {
                     </form>
                 </div>
                 <ul>
+                    <h2 class="font-bold">顧客情報 検索結果</h2>
+                    <li class="flex flex-row flex-wrap *:p-2">
+                        <p>顧客ID</p>
+                        <p>苗字(かな)</p>
+                        <p>氏名(かな)</p>
+                        <p>苗字</p>
+                        <p>氏名</p>
+                        <p>電話番号</p>
+                        <p>誕生日</p>
+                        <p>住所</p>
+                    </li>
                     {data.clients.map((client: Client) => (
-                        <li>
+                        <li class="flex flex-row flex-wrap *:p-2">
                             <p>{client.id}</p>
                             <p>{client.lastNameHiragana}</p>
                             <p>{client.firstNameHiragana}</p>

@@ -9,7 +9,7 @@ export const handler: Handlers<Client | null> = {
         for await (const entry of entries) {
             clients.push(entry.value);
         }
-        console.log("clients-list", clients);
+        // console.log("clients-list", clients);
         return new Response(JSON.stringify(clients));
     },
 };

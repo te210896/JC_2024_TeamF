@@ -14,8 +14,8 @@ export const handler: Handlers = {
     async POST(req, ctx) {
         // サーバーサイドの検証ではCookieとRedirect
         const formData = await req.formData();
-        const clientId = formData.get("clientId");
-        const inquiryType = formData.get("inquiryType");
+        const clientId = String(formData.get("clientId"));
+        const inquiryType = String(formData.get("inquiryType"));
         let contacts: Contact[] = [];
 
         // 接続自体に失敗したらcatch, 顧客情報なしはthen
@@ -24,10 +24,21 @@ export const handler: Handlers = {
         )).json();
         const hasError = await (response.then((newContacts) => {
             contacts = newContacts;
-            console.log(contacts);
+            // console.log(newContacts);
+            // console.log("clientId", clientId === "" ? ".*" : clientId, "inquiryType", inquiryType === "null" ? ".*" : inquiryType);
+            contacts = contacts.filter((contact) =>
+                new RegExp(clientId === "" ? ".*" : clientId).test(
+                    contact.clientId,
+                )
+            );
+            contacts = contacts.filter((contact) =>
+                new RegExp(inquiryType === "null" ? ".*" : inquiryType).test(
+                    contact.inquiryType,
+                )
+            );
             return false;
         }).catch((_e) => true));
-        console.log(hasError);
+        // console.log(hasError);
         return hasError
             ? ctx.render({
                 clientId,
@@ -86,7 +97,6 @@ export default function ContactSearchPage({ data }: PageProps) {
                                     name="clientId"
                                     value={data.clientId}
                                     placeholder="顧客ID"
-                                    required
                                 />
                             </div>
                         </div>
@@ -156,8 +166,20 @@ export default function ContactSearchPage({ data }: PageProps) {
                     </form>
                 </div>
                 <ul>
+                    <h2 class="font-bold">問い合わせ情報 検索結果</h2>
+                    <li class="flex flex-row flex-wrap *:p-2">
+                        <p>問い合わせID</p>
+                        <p>問い合わせタイプ</p>
+                        <p>問い合わせ年月日</p>
+                        <p>問い合わせ内容</p>
+                        <p>施工番号</p>
+                        <p>部署</p>
+                        <p>責任者</p>
+                        <p>施工内容</p>
+                        <p>顧客ID</p>
+                    </li>
                     {data.contacts.map((contact: Contact) => (
-                        <li>
+                        <li class="flex flex-row flex-wrap *:p-2">
                             <p>{contact.id}</p>
                             <p>{contact.inquiryType}</p>
                             <p>{contact.contactDate}</p>
