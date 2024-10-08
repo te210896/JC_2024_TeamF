@@ -6,8 +6,9 @@ body {
 }
 
 .login-box {
-    max-width: 300px;
+    max-width: 400px;
     margin: auto;
+    margin-top: 180px;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -25,7 +26,7 @@ input[type="text"], input[type="password"] {
 
 input[type="submit"] {
     width: 100%;
-    background-color: #4CAF50;
+    background-color: #007BFF;
     color: white;
     padding: 10px;
     border: none;
@@ -34,5 +35,5 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
 }

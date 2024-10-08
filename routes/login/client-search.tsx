@@ -1,8 +1,10 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
+import ClientEditDeleteForm from "../../islands/ClientEditDeleteForm.tsx";
 import { Client } from "./../../utils/Client.ts";
 
 export const handler: Handlers = {
     GET(_req, ctx) {
+        console.log("GET");
         return ctx.render({
             lastNameHiragana: "",
             firstNameHiragana: "",
@@ -21,7 +23,89 @@ export const handler: Handlers = {
         const tel = String(formData.get("tel"));
         const birthday = String(formData.get("birthday"));
         let clients: Client[] = [];
+        const method = String(formData.get("method"));
+        console.log(method);
 
+        // 更新
+        if (method === "PUT") {
+            // console.log(lastNameHiragana);
+            const id = String(formData.get("id"));
+            const lastName = String(formData.get("lastName"));
+            const firstName = String(formData.get("firstName"));
+            const address = String(formData.get("address"));
+
+            const response = (await fetch(
+                `${new URL(req.url).origin}/api/clients`,
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        id,
+                        lastNameHiragana,
+                        firstNameHiragana,
+                        lastName,
+                        firstName,
+                        tel,
+                        birthday,
+                        address,
+                    }),
+                },
+            )).json();
+            const hasError = await (response.then((_client) => false)
+                .catch((_e) => true));
+            console.log(hasError);
+            return hasError
+                ? ctx.render({
+                    lastNameHiragana,
+                    firstNameHiragana,
+                    tel,
+                    birthday,
+                    clients,
+                    hasError,
+                    isPost: true,
+                })
+                : ctx.render({
+                    lastName: "",
+                    firstName: "",
+                    tel: "",
+                    birthday: "",
+                    clients,
+                    hasError,
+                    isPost: true,
+                });
+        }
+
+        // 削除
+        if (method === "DELETE") {
+            console.log("DELETE");
+            const id = String(formData.get("id"));
+
+            const response = await fetch(
+                `${new URL(req.url).origin}/api/clients/delete/${id}`,
+            );
+            const hasError = response ? false : true;
+            console.log(hasError);
+            return hasError
+                ? ctx.render({
+                    lastNameHiragana,
+                    firstNameHiragana,
+                    tel,
+                    birthday,
+                    clients,
+                    hasError,
+                    isPost: true,
+                })
+                : ctx.render({
+                    lastName: "",
+                    firstName: "",
+                    tel: "",
+                    birthday: "",
+                    clients,
+                    hasError,
+                    isPost: true,
+                });
+        }
+
+        // 検索
         // 接続自体に失敗したらcatch, 顧客情報なしはthen
         const response = (await fetch(
             `${new URL(req.url).origin}/api/clients/list`,
@@ -29,13 +113,17 @@ export const handler: Handlers = {
         const hasError = await (response.then((newClients) => {
             clients = newClients;
             clients = clients.filter((client) =>
-                new RegExp(lastNameHiragana === "" ? ".*" : lastNameHiragana)
+                new RegExp(
+                    lastNameHiragana === "" ? ".*" : lastNameHiragana,
+                )
                     .test(
                         client.lastNameHiragana,
                     )
             );
             clients = clients.filter((client) =>
-                new RegExp(firstNameHiragana === "" ? ".*" : firstNameHiragana)
+                new RegExp(
+                    firstNameHiragana === "" ? ".*" : firstNameHiragana,
+                )
                     .test(
                         client.firstNameHiragana,
                     )
@@ -79,6 +167,10 @@ export const handler: Handlers = {
 };
 
 export default function ClientSearchPage({ data }: PageProps) {
+    const clients: Client[] = data.clients;
+    const hasError: boolean = data.hasError;
+    const isPost: boolean = data.isPost;
+
     return (
         <>
             <head>
@@ -103,8 +195,19 @@ export default function ClientSearchPage({ data }: PageProps) {
                                 : "正常に検索できました。"}
                         </p>
                     )}
-                    <form action="/login/client-search" method="POST">
+                    <form
+                        id="clientSearchForm"
+                        action="/login/client-search"
+                        method="POST"
+                    >
                         <div className="section">
+                            <div className="form-group">
+                                <input
+                                    type="hidden"
+                                    name="method"
+                                    value="POST"
+                                />
+                            </div>
                             <div className="form-group">
                                 <label htmlFor="name">苗字(かな):</label>
                                 <input
@@ -144,35 +247,17 @@ export default function ClientSearchPage({ data }: PageProps) {
 
                         {/* 送信ボタン */}
                         <div className="form-group">
-                            <button type="submit">送信</button>
+                            <button type="submit" id="method" value="search">
+                                送信
+                            </button>
                         </div>
                     </form>
                 </div>
-                <ul>
-                    <h2 class="font-bold">顧客情報 検索結果</h2>
-                    <li class="flex flex-row flex-wrap *:p-2">
-                        <p>顧客ID</p>
-                        <p>苗字(かな)</p>
-                        <p>氏名(かな)</p>
-                        <p>苗字</p>
-                        <p>氏名</p>
-                        <p>電話番号</p>
-                        <p>誕生日</p>
-                        <p>住所</p>
-                    </li>
-                    {data.clients.map((client: Client) => (
-                        <li class="flex flex-row flex-wrap *:p-2">
-                            <p>{client.id}</p>
-                            <p>{client.lastNameHiragana}</p>
-                            <p>{client.firstNameHiragana}</p>
-                            <p>{client.lastName}</p>
-                            <p>{client.firstName}</p>
-                            <p>{client.tel}</p>
-                            <p>{client.birthday}</p>
-                            <p>{client.address}</p>
-                        </li>
-                    ))}
-                </ul>
+                <ClientEditDeleteForm
+                    clients={clients}
+                    hasError={hasError}
+                    isPost={isPost}
+                />
             </div>
         </>
     );

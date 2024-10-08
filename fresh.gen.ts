@@ -6,6 +6,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
 import * as $api_clients_id_ from "./routes/api/clients/[id].ts";
+import * as $api_clients_delete_id_ from "./routes/api/clients/delete/[id].ts";
 import * as $api_clients_index from "./routes/api/clients/index.ts";
 import * as $api_clients_list from "./routes/api/clients/list.ts";
 import * as $api_contacts_id_ from "./routes/api/contacts/[id].ts";
@@ -23,7 +24,7 @@ import * as $login_contact_search from "./routes/login/contact-search.tsx";
 import * as $login_forgot_password from "./routes/login/forgot-password.tsx";
 import * as $login_portal from "./routes/login/portal.tsx";
 import * as $old_search from "./routes/old/search.tsx";
-
+import * as $ClientEditDeleteForm from "./islands/ClientEditDeleteForm.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -32,6 +33,7 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/_layout.tsx": $_layout,
     "./routes/api/clients/[id].ts": $api_clients_id_,
+    "./routes/api/clients/delete/[id].ts": $api_clients_delete_id_,
     "./routes/api/clients/index.ts": $api_clients_index,
     "./routes/api/clients/list.ts": $api_clients_list,
     "./routes/api/contacts/[id].ts": $api_contacts_id_,
@@ -50,7 +52,9 @@ const manifest = {
     "./routes/login/portal.tsx": $login_portal,
     "./routes/old/search.tsx": $old_search,
   },
-  islands: {},
+  islands: {
+    "./islands/ClientEditDeleteForm.tsx": $ClientEditDeleteForm,
+  },
   baseUrl: import.meta.url,
 } satisfies Manifest;
 
