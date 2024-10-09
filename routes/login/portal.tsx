@@ -38,15 +38,28 @@ export default function PortalPage({ data }: PageProps) {
                     href="/portal.css"
                 />
             </head>
-            
-                <a href="./client-search">顧客情報検索・表示</a><br></br>
-                {data.isAdmin && <><a href="./admin/client-create">顧客情報作成</a><br></br></>}
-                <a href="./contact-search">問い合わせ情報検索・表示</a><br></br>
-                {data.isAdmin && <><a href="./admin/contact-create">問い合わせ情報作成</a><br></br></>}
+            <div class="login-box" id="portal-size">
+                <a href="./client-search">顧客情報検索・表示</a>
+                <br></br>
+                {data.isAdmin && (
+                    <>
+                        <a href="./admin/client-create">顧客情報作成</a>
+                        <br></br>
+                    </>
+                )}
+                <a href="./contact-search">問い合わせ情報検索・表示</a>
+                <br></br>
+                {data.isAdmin && (
+                    <>
+                        <a href="./admin/contact-create">問い合わせ情報作成</a>
+                        <br></br>
+                    </>
+                )}
+
                 <form id="logoutForm" action="/login/portal" method="POST">
                     <input type="submit" value="ログアウト" />
                 </form>
-            
+            </div>
         </>
     );
 }

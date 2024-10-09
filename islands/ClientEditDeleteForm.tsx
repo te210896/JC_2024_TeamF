@@ -6,7 +6,7 @@ interface ClientEditDeleteFormProps {
     isPost: boolean;
 }
 
-export default function LoginForm(
+export default function ClientEditDeleteForm(
     {
         clients,
         hasError,
@@ -38,106 +38,108 @@ export default function LoginForm(
                 </li>
                 {clients.map((client: Client) => (
                     <li class="flex flex-row flex-wrap *:p-2">
-                        <form
-                            id="clientEditForm"
-                            action="/login/client-search"
-                            method="POST"
-                        >
-                            <input
-                                type="hidden"
-                                name="method"
-                                value="PUT"
-                            />
-                            <button type="submit">
-                                更新
-                            </button>
+                        <div class="example2">
                             <form
-                                id="clientDeleteForm"
+                                id="clientEditForm"
                                 action="/login/client-search"
                                 method="POST"
                             >
-                                <button type="submit">
-                                    削除
-                                </button>
                                 <input
                                     type="hidden"
                                     name="method"
-                                    value="DELETE"
+                                    value="PUT"
                                 />
+                                <button type="submit">
+                                    更新
+                                </button>
+                                <form
+                                    id="clientDeleteForm"
+                                    action="/login/client-search"
+                                    method="POST"
+                                >
+                                    <button type="submit">
+                                        削除
+                                    </button>
+                                    <input
+                                        type="hidden"
+                                        name="method"
+                                        value="DELETE"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        id="name"
+                                        name="id"
+                                        placeholder="idが存在しません"
+                                        value={client.id}
+                                        required
+                                    />
+                                </form>
                                 <input
-                                    type="hidden"
+                                    type="text"
                                     id="name"
                                     name="id"
                                     placeholder="idが存在しません"
                                     value={client.id}
                                     required
                                 />
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="lastNameHiragana"
+                                    placeholder="苗字(かな)が存在しません"
+                                    value={client.lastNameHiragana}
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="firstNameHiragana"
+                                    placeholder="名前(かな)が存在しません"
+                                    value={client.firstNameHiragana}
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="lastName"
+                                    placeholder="苗字が存在しません"
+                                    value={client.lastName}
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="firstName"
+                                    placeholder="名前が存在しません"
+                                    value={client.firstName}
+                                    required
+                                />
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="tel"
+                                    placeholder="電話番号が存在しません"
+                                    value={client.tel}
+                                    required
+                                />
+                                <input
+                                    type="date"
+                                    id="birthday"
+                                    name="birthday"
+                                    placeholder="誕生日が存在しません"
+                                    value={String(client.birthday)}
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                    placeholder="住所"
+                                    value={client.address}
+                                    required
+                                />
                             </form>
-                            <input
-                                type="text"
-                                id="name"
-                                name="id"
-                                placeholder="idが存在しません"
-                                value={client.id}
-                                required
-                            />
-                            <input
-                                type="text"
-                                id="name"
-                                name="lastNameHiragana"
-                                placeholder="苗字(かな)が存在しません"
-                                value={client.lastNameHiragana}
-                                required
-                            />
-                            <input
-                                type="text"
-                                id="name"
-                                name="firstNameHiragana"
-                                placeholder="名前(かな)が存在しません"
-                                value={client.firstNameHiragana}
-                                required
-                            />
-                            <input
-                                type="text"
-                                id="name"
-                                name="lastName"
-                                placeholder="苗字が存在しません"
-                                value={client.lastName}
-                                required
-                            />
-                            <input
-                                type="text"
-                                id="name"
-                                name="firstName"
-                                placeholder="名前が存在しません"
-                                value={client.firstName}
-                                required
-                            />
-                            <input
-                                type="tel"
-                                id="phone"
-                                name="tel"
-                                placeholder="電話番号が存在しません"
-                                value={client.tel}
-                                required
-                            />
-                            <input
-                                type="date"
-                                id="birthday"
-                                name="birthday"
-                                placeholder="誕生日が存在しません"
-                                value={String(client.birthday)}
-                                required
-                            />
-                            <input
-                                type="text"
-                                id="address"
-                                name="address"
-                                placeholder="住所"
-                                value={client.address}
-                                required
-                            />
-                        </form>
+                        </div>
                     </li>
                 ))}
             </ul>

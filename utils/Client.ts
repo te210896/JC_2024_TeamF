@@ -7,6 +7,6 @@ export interface Client {
     lastName: string;
     firstName: string;
     tel: string;
-    birthday: Date;
+    birthday: string;
     address: string;
 }
