@@ -109,7 +109,7 @@ export default function ClientCreateForm(
                             <input
                                 id="phone"
                                 type="tel"
-                                name="phone"
+                                name="tel"
                                 value={tel}
                                 placeholder="電話番号"
                                 required
